@@ -1,5 +1,6 @@
 const fs = require('fs');
 const query = require('querystring');
+const database = require('../database/database');
 
 module.exports = (req, res) => {
     if(req.path !== '/images/upload'){
@@ -30,7 +31,16 @@ module.exports = (req, res) => {
         });
 
         req.on('end', () => {
-            let parsedResult = query.parse(result);
+            let imageData = query.parse(result);
+
+            database.save(imageData);
+
+            res.writeHead(302, {
+                Location: '/'
+            });
+
+            res.end();
+
         });
     }
 
