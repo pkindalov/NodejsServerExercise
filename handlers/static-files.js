@@ -13,15 +13,24 @@ let getContentType = (url) => {
 };
 
 
+let validateExtensionOfFile = (path) => {
+    if(path.endsWith('.css') || path.endsWith('.js') || path.endsWith('.html') || path.endsWith('.jpg')){
+        return true;
+    }
+
+    return false;
+};
+
+
 module.exports = (req, res) => {
      fs.readFile('.' + req.path, (err, data) => {
-                if(err){
+                if(err || req.method !== 'GET' || !req.path.startsWith('/content') || !validateExtensionOfFile(req.path)){
                     res.writeHead(404, {
                         'Content-type':'text/plain'
                     });
 
                     res.write('Resource not found');
-                    res.end();
+                    // res.end();
                 }
 
 
