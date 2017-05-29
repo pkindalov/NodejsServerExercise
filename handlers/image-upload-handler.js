@@ -34,8 +34,8 @@ module.exports = (req, res) => {
             let imageData = query.parse(result);
 
 
-           let imageName = imageData['image-name'];
-           let imageURL = imageData['image-url'];
+           let imageName = imageData.name;
+           let imageURL = imageData.url;
 
            if(!imageName || !imageURL){
                fs.readFile('./views/image-upload-error.html', (err, data) => {
