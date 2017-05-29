@@ -1,4 +1,5 @@
 const fs = require('fs');
+const query = require('querystring');
 
 module.exports = (req, res) => {
     if(req.path !== '/images/upload'){
@@ -22,7 +23,15 @@ module.exports = (req, res) => {
         });
 
     }else if(req.method === 'POST'){
+        let result = '';
 
+        req.on('data', data => {
+            result += data;
+        });
+
+        req.on('end', () => {
+            let parsedResult = query.parse(result);
+        });
     }
 
 };
